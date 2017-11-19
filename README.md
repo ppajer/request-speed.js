@@ -40,3 +40,26 @@ The time it takes for the DOM to become interactive, as measured from the value 
 ### `report.loadTime`
 
 The time it takes for all the contents of the document to be loaded, including scripts, styles, images and other assets, as measured from the value of `requestTime`. A high value may indicate that your application uses too many assets or assets that aren't optimised for speed.
+
+## Full example
+
+```
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="path/to/request-speed.js"></script>
+	</head>
+	<body>
+		// your content
+		<script type="text/javascript">
+			new RequestSpeed({
+				raw: false,
+				noConsole: true,
+				reportUrl: 'http://endpoint.example.com'
+			});
+		</script>
+	</body>
+</html>
+
+```
