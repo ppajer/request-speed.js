@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Request-speed.js demo</title>
+	<script type="text/javascript" src="../request-speed.js"></script>
+</head>
+<body>
+	<p>
+		Just some nice trees to take up some bandwidth for the purpose of this demo, keep scrolling
+	</p>
+	<img src="http://d279m997dpfwgl.cloudfront.net/wp/2016/09/tree.jpg">
+	<h1>Open your console to see results!<br><small>Try refreshing your browser with and without forcing the cache to see the difference</small></h1>
+	<script type="text/javascript">
+		var a = new RequestSpeed({
+			raw: false,
+			reportUrl: false
+		});
+	</script>
+</body>
+</html>
