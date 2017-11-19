@@ -1,7 +1,6 @@
 function RequestSpeed(config) {
 
 	this.init = function(config) {
-
 		if (typeof window.performance === 'undefined') {
 			console.warn('The Navigation Timing API is not available in your browser, request-speed.js failed to initialize');
 			return false;
@@ -15,11 +14,9 @@ function RequestSpeed(config) {
 	}
 
 	this.waitForLoadEnd = function() {
-		console.log(document.readyState)
 		if (document.readyState && document.readyState === 'complete') {
 			this.measureSpeed.bind(this).call();
 		} else {
-			console.log('listener added')
 			if (window.addEventListener) {
 				window.addEventListener('load', this.measureSpeed.bind(this), true);
 			} else {
@@ -29,18 +26,15 @@ function RequestSpeed(config) {
 	}
 
 	this.measureSpeed = function() {
-
-		console.log('listener called')
-
 		var raw = config.raw,
-			timings = window.performance.timing;
+			timing = window.performance.timing;
 		
 		if (!config.noConsole) {
-			console.log(raw ? timings : this.createReport(timings));
+			console.log(raw ? timing : this.createReport(timing));
 		}
 
 		if (this.reportUrl) {
-			this.reportToUrl(raw ? timings : this.createReport(timings));
+			this.reportToUrl(raw ? timing : this.createReport(timing));
 		}
 	}
 
@@ -48,8 +42,8 @@ function RequestSpeed(config) {
 		return {
 			requestTime: timing.requestStart,
 			firstByte: timing.domLoading - timing.requestStart,
-			DomReady: timing.domInteractive - timing.requestStart,
-			LoadTime: timing.domComplete - timing.requestStart
+			domReady: timing.domInteractive - timing.requestStart,
+			loadTime: timing.domComplete - timing.requestStart
 		};
 	}
 
