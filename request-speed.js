@@ -57,6 +57,7 @@ function RequestSpeed(config) {
 			}
 		});
 
+		XHR.send();
 	}
 
 	this.XHR = function() {
