@@ -17,9 +17,14 @@ var config = {
 	raw: false, // Used to determine if the results should contain all the timings or an aggregate report
 	noConsole: false, // If set to true, no the results won't be displayed to the console. Useful for production
 	reportUrl: false // False to skip sending remote report, or an URL string to the endpoint to send data to
+	extraData: false // An object containing additional data you may want to send along with the report
 };
 
 ```
+
+## Adding keys to the report
+
+The data sent to the remote endpoint can be customized to suit any data structure your application may require. This is useful to pass any API key or identifying information necessary to access your server. To add data to the report, simply pass a JavaScript object containing your custom keys and values to the constructor as the config object's `extraData` key. The keys in this object will be merged with the speed report, so be aware that if you use the same keys as request-speed.js does for its reports, those keys will be overwritten with your custom values.
 
 ## The report
 
@@ -56,7 +61,11 @@ The time it takes for all the contents of the document to be loaded, including s
 			new RequestSpeed({
 				raw: false,
 				noConsole: true,
-				reportUrl: 'http://endpoint.example.com'
+				reportUrl: 'http://endpoint.example.com',
+				extraData: {
+					apiKey: 'abc123',
+					...
+				}
 			});
 		</script>
 	</body>

@@ -8,6 +8,7 @@ function RequestSpeed(config) {
 
 		this.reportUrl = config.reportUrl ? config.reportUrl : false;
 		this.noConsole = config.noConsole ? config.noConsole : false;
+		this.extraData = config.extraData ? config.extraData : false;
 		this.raw = config.raw ? config.raw : false;
 
 		this.waitForLoadEnd();
@@ -27,14 +28,19 @@ function RequestSpeed(config) {
 
 	this.measureSpeed = function() {
 		var raw = config.raw,
-			timing = window.performance.timing;
+			timing = window.performance.timing,
+			reportData = raw ? timing : this.createReport(timing);
+
+		if (this.extraData) {
+			reportData = this.mergeData([this.extraData, reportData]);
+		}
 		
 		if (!config.noConsole) {
-			console.log(raw ? timing : this.createReport(timing));
+			console.log(reportData);
 		}
 
 		if (this.reportUrl) {
-			this.reportToUrl(raw ? timing : this.createReport(timing));
+			this.reportToUrl(reportData);
 		}
 	}
 
@@ -47,6 +53,17 @@ function RequestSpeed(config) {
 		};
 	}
 
+	this.mergeData = function(dataset) {
+		var merge = {};
+		for (var i = dataset.length - 1; i >= 0; i--) {
+			for (var key in dataset[i]) {
+				merge[key] = dataset[i][key];
+			}
+		}
+
+		return merge;
+	}
+
 	this.reportUrl = function(data) {
 		var XHR = this.XHR();
 
@@ -57,7 +74,7 @@ function RequestSpeed(config) {
 			}
 		});
 
-		XHR.send();
+		XHR.send(data);
 	}
 
 	this.XHR = function() {
